@@ -1,0 +1,81 @@
+interval:
+  - interval: 1min
+    # Set ninth LED to color based on VOC values and tenth one off
+    # Range based on Sensirion SGP41 datasheet      
+    then:
+      - if:
+          condition:
+            light.is_on: led_strip
+          then:
+            - if:
+                condition:
+                  lambda: 'return id(voc).state < 25;'
+                  #Sensirion VOC Index: Very Low
+                then:
+                  - light.addressable_set: 
+                      id: led_strip
+                      range_from: 8
+                      range_to: 8
+                      #Low Blue
+                      red: 0%                                                     
+                      green: 0%                                                   
+                      blue: 50%
+            - if:
+                condition:
+                  lambda: 'return id(voc).state >= 25 && id(voc).state < 150;'      
+                  #Sensirion VOC Index: Average
+                then:
+                  - light.addressable_set:
+                      id: led_strip
+                      range_from: 8
+                      range_to: 8
+                      #Green
+                      red: 0%
+                      green: 100%
+                      blue: 0%
+            - if:                         
+                condition:         
+                  lambda: 'return id(voc).state >= 150 && id(voc).state < 300;'
+                  #Sensirion VOC Index: Above Average 
+                then:                                 
+                  - light.addressable_set:      
+                      id: led_strip       
+                      range_from: 8       
+                      range_to: 8  
+                      #Orange                          
+                      red: 100%                                                        
+                      green: 50%
+                      blue: 0%                        
+            - if:                                                                        
+                condition:                                                               
+                  lambda: 'return id(voc).state >= 300 && id(voc).state < 500;'
+                  #Sensirion VOC Index: High                                
+                then:                                                                     
+                  - light.addressable_set:                                                
+                      id: led_strip                                                       
+                      range_from: 8                                                       
+                      range_to: 8                                                         
+                      #Red                                                             
+                      red: 100%                                                           
+                      green: 100%                                                          
+                      blue: 0%                                                            
+            - if:                                                                        
+                condition:                                                               
+                  lambda: 'return id(voc).state >= 500;'
+                  #Sensirion VOC Index: Very High
+                then:                                                                     
+                  - light.addressable_set:                                                
+                      id: led_strip                                                       
+                      range_from: 8                                                       
+                      range_to: 8                                                         
+                      #Magenta                                                           
+                      red: 100%                                                           
+                      green: 0%                                                          
+                      blue: 100%                                                            
+            - light.addressable_set:                                                
+                id: led_strip                                                       
+                range_from: 9                                                       
+                range_to: 9                                                         
+                red: 0%                                                             
+                green: 0%                                                           
+                blue: 0%  
