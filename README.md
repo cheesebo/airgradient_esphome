@@ -2,28 +2,23 @@
 Extensions to MallocArray's AirGradient ESPhome integration repo 
   https://github.com/MallocArray/airgradient_esphome
 
-These are a few files I've created to modify the LED display to cover four sensor readings:
+These are a few files I've created to modify the LED display to cover four sensor readings.
 
-Of the eleven LEDs:
+I've used the first three LEDs for CO2, with the next one off.
 
-  xxx-xxx-x-x
+The next three for AQI, with the next one off.
 
-  CO2
+The next one for VOC, one more is off and the last is for NOX.
 
-      AQI
-
-          VOC
-
-            NOX
-            
 
 Each with a grade based on:
  CO2 - based on Wikipedia Computing the AQI (using the same details from the MallocArray repo with some changes for the individual LED management)
  AQI - based on Wikipedia AQI levels (using values calculated by sensor_pms5003_extended_life.yaml from MallocArray repo)
- VOC - based on Sensirion SGP41 datasheet
- NOX - based on Sensirion SGP41 datasheet
+ VOC - roughly based on Sensirion SGP41 datasheet
+ NOX - roughly based on Sensirion SGP41 datasheet
          
 The ranges controlling the colours are arbitary and can be easily changed by editing the approrpiate led sensor yaml file in the packages folder
+
 
 The display_sh_1106_multi_page.yaml file has been udated to show AQI rather than ug/m3 for PM2.5
 
