@@ -5,11 +5,17 @@ Extensions to MallocArray's AirGradient ESPhome integration repo
 These are a few files I've created to modify the LED display to cover four sensor readings:
 
 Of the eleven LEDs:
+
   xxx-xxx-x-x
+
   CO2
+
       AQI
+
           VOC
+
             NOX
+            
 
 Each with a grade based on:
  CO2 - based on Wikipedia Computing the AQI (using the same details from the MallocArray repo with some changes for the individual LED management)
