@@ -1,0 +1,133 @@
+#Colours that show reasonalby well on the LED strip:
+
+#Colours for ranges:
+
+# Cyan 50%
+# Blue 50%
+# Green 50%
+# Green/Yellow 50%
+# Yellow 50%
+# Orange 75%
+# Pale Red 75%
+# Red 75%
+# Red 100%
+# Magenta 100%
+
+
+#CO2
+
+
+#AQI:
+#0 to 50	G    Good	Green
+#51 to 100	Y    Moderate	Yellow
+#101 to 150	O    Unhealthy for sensitive groups	Orange
+#151–200	R    Unhealthy	Red
+#201–300	M    Very unhealthy	Purple
+#301–500	M    Hazardous	Maroon
+#501-1000	M    Very Hazardous	Brown
+
+
+#VOC
+
+#NOX
+
+
+
+
+interval:
+  - interval: 10sec
+    then:
+      - if:
+          condition:
+            light.is_on: led_strip
+          then:
+            - light.addressable_set:
+                id: led_strip       
+                range_from: 0       
+                range_to: 0
+                #Cyan 50%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .5;'
+                red: 0%           
+                green: 100%           
+                blue: 100% 
+            - light.addressable_set:
+                id: led_strip
+                range_from: 1  
+                range_to: 1
+                #Blue 50%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .5;'
+                red: 0%
+                green: 0%
+                blue: 100% 
+            - light.addressable_set: 
+                id: led_strip
+                range_from: 2
+                range_to: 2
+                #Green 50%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .5;'
+                red: 0%                                                     
+                green: 100%                                                   
+                blue: 0%
+            - light.addressable_set:             
+                id: led_strip                    
+                range_from: 3                  
+                range_to: 3
+                #Green/Yellow 50%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .5;' 
+                red: 85%
+                green: 100%
+                blue: 0%
+            - light.addressable_set:             
+                id: led_strip                    
+                range_from: 4                
+                range_to: 4
+                #Yellow 
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .5;'
+                red: 100%
+                green: 100%
+                blue: 0%
+            - light.addressable_set:                                                
+                id: led_strip                                                       
+                range_from: 5                                                      
+                range_to: 5                                                     
+                #Orange 75%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .75;'
+                red: 100%
+                green: 75%                                                          
+                blue: 0%
+            - light.addressable_set:
+                id: led_strip       
+                range_from: 6
+                range_to: 6                
+                #Pale Red  75%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .75;'
+                red: 100%           
+                green: 50%           
+                blue: 50%
+            - light.addressable_set:             
+                id: led_strip                    
+                range_from: 7                   
+                range_to: 7
+                #Red 75%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0 * .75;'
+                red: 100%
+                green: 0%
+                blue: 0%
+            - light.addressable_set:             
+                id: led_strip                    
+                range_from: 8                   
+                range_to: 8
+                #Red 100%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0;'
+                red: 100%
+                green: 0%
+                blue: 0%
+            - light.addressable_set:
+                id: led_strip
+                range_from: 9
+                range_to: 10
+                #Magenta 100%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0;'
+                red: 100%
+                green: 0%
+                blue: 100%

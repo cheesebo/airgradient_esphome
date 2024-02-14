@@ -1,0 +1,10 @@
+interval:
+  - interval: 30sec
+    then:
+      - if:
+          condition:
+            light.is_on: led_strip
+          then:
+            light.dim_relative:
+                id: led_strip
+                relative_brightness: !lambda 'return id(led_brightness).state;'

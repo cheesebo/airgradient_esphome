@@ -4,70 +4,104 @@ interval:
     then:
       - if:
           condition:
-            light.is_on: led_strip
+            lambda: 'return id(device_uptime).state > 30;'
+            #light.is_on: led_strip
           then:
             - if:
                 condition:
-                  lambda: 'return id(pm_2_5_aqi).state < 4;'
-                  #UK AQI: Low
+                  lambda: 'return id(pm_2_5_aqi).state < 51;'
+                  #AQI: Good
                 then:
                   - light.addressable_set: 
                       id: led_strip
                       range_from: 4
                       range_to: 6
-                      #Green
+                      #Green 50%
+                      color_brightness: !lambda 'return (id(led_brightness).state / 100.0) * .5;'
                       red: 0%                                                     
                       green: 100%                                                   
                       blue: 0%
             - if:
                 condition:
-                  lambda: 'return id(pm_2_5_aqi).state = 5;'
-                  #UK AQI: Still low
+                  lambda: 'return id(pm_2_5_aqi).state >= 51 && id(pm_2_5_aqi).state < 101;'
+                  #AQI: Moderate
                 then:
                   - light.addressable_set:             
                       id: led_strip                    
                       range_from: 4                    
                       range_to: 6
-                      #Yellow               
+                      #Yellow 
+                      color_brightness: !lambda 'return (id(led_brightness).state / 100.0) * .5;'
                       red: 100%
                       green: 100%
                       blue: 0%
             - if:                                                                         
                 condition:                                                                
-                  lambda: 'return id(pm_2_5_aqi).state = 6;'  
-                  #UK AQI: Moderate                                                       
+                  lambda: 'return id(pm_2_5_aqi).state >= 101 && id(pm_2_5_aqi).state < 151;'  
+                  #AQI: Unhealthy for sensitive groups                                                      
                 then:                                                                     
                   - light.addressable_set:                                                
                       id: led_strip                                                       
                       range_from: 4                                                       
                       range_to: 6                                                         
-                      #Orange                                                             
-                      red: 100%                                                           
-                      green: 50%                                                          
-                      blue: 0%     
+                      #Orange 75%
+                      color_brightness: !lambda 'return (id(led_brightness).state / 100.0) * .75;'
+                      red: 100%
+                      green: 75%                                                          
+                      blue: 0%
             - if:
                 condition:
-                  lambda: 'return id(pm_2_5_aqi).state >= 7 && id(pm_2_5_aqi).state < 10;'
-                  #UK AQI: High
+                  lambda: 'return id(pm_2_5_aqi).state >= 151 && id(pm_2_5_aqi).state < 201;'
+                  #AQI: Unhealthy
                 then:
                   - light.addressable_set:             
                       id: led_strip                    
                       range_from: 4                    
                       range_to: 6
-                      #Red                      
+                      #Pale Red  75%
+                      color_brightness: !lambda 'return (id(led_brightness).state / 100.0) * .75;'
+                      red: 100%           
+                      green: 50%           
+                      blue: 50%
+            - if:                                                                                                          
+                condition:                                                                                                 
+                  lambda: 'return id(pm_2_5_aqi).state >= 201 && id(pm_2_5_aqi).state < 301;'                              
+                  #AQI: Very Unhealthy                                                                                          
+                then:                                                                                                      
+                  - light.addressable_set:                                                                                 
+                      id: led_strip                                                                                        
+                      range_from: 4                                                                                        
+                      range_to: 6                                                                                          
+                      #Red 75%
+                      color_brightness: !lambda 'return (id(led_brightness).state / 100.0) * .75;'
                       red: 100%
                       green: 0%
-                      blue: 0%
+                      blue: 0%                                                                                              
+            - if:                                                                                                          
+                condition:                                                                                                 
+                  lambda: 'return id(pm_2_5_aqi).state >= 301 && id(pm_2_5_aqi).state < 501;'                              
+                  #AQI: Hazardous                                                                                     
+                then:                                                                                                      
+                  - light.addressable_set:                                                                                 
+                      id: led_strip                                                                                        
+                      range_from: 4                                                                                        
+                      range_to: 6                                                                                          
+                      #Red 100%
+                      color_brightness: !lambda 'return id(led_brightness).state / 100.0;'
+                      red: 100%
+                      green: 0%
+                      blue: 0%                                                                                     
             - if:
                 condition:
-                  lambda: 'return id(pm_2_5_aqi).state >= 10;'
-                  #UK AQI: Very High
+                  lambda: 'return id(pm_2_5_aqi).state >= 501;'
+                  #UK AQI: Very Hazardous
                 then:
                   - light.addressable_set:             
                       id: led_strip                    
                       range_from: 4                    
                       range_to: 6   
-                      #Magenta                   
+                      #Magenta 100%
+                      color_brightness: !lambda 'return id(led_brightness).state / 100.0;'
                       red: 100%
                       green: 0%
                       blue: 100%
@@ -77,4 +111,4 @@ interval:
                 range_to: 7                                                        
                 red: 0%             
                 green: 0%           
-                blue: 0%  
+                blue: 0%
