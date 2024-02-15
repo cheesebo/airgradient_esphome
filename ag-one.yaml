@@ -11,12 +11,9 @@ esp32:
 logger:
 
 # Enable Home Assistant API
-api:
-  encryption:
-    key: "Ghpy0/y0YPQ1omQu0AFAB6vzU2WCd18+LlA0tkMLcas="
+api:  # Add encryption key as desired
 
-ota:
-  password: "1100bc70e5286f0df92cd8a96d356d50"
+ota:  # Add password as desired
 
 wifi:
   ssid: !secret wifi_ssid
