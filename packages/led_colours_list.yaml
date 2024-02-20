@@ -12,28 +12,7 @@
 # Red 75%
 # Red 100%
 # Magenta 100%
-
-
-#CO2
-
-
-#AQI:
-#0 to 50	G    Good	Green
-#51 to 100	Y    Moderate	Yellow
-#101 to 150	O    Unhealthy for sensitive groups	Orange
-#151–200	R    Unhealthy	Red
-#201–300	M    Very unhealthy	Purple
-#301–500	M    Hazardous	Maroon
-#501-1000	M    Very Hazardous	Brown
-
-
-#VOC
-
-#NOX
-
-
-
-
+# White 100%
 interval:
   - interval: 10sec
     then:
@@ -125,9 +104,18 @@ interval:
             - light.addressable_set:
                 id: led_strip
                 range_from: 9
-                range_to: 10
+                range_to: 9
                 #Magenta 100%
                 color_brightness: !lambda 'return id(led_brightness).state / 100.0;'
                 red: 100%
                 green: 0%
+                blue: 100%
+            - light.addressable_set:
+                id: led_strip
+                range_from: 10
+                range_to: 10
+                #Magenta 100%
+                color_brightness: !lambda 'return id(led_brightness).state / 100.0;'
+                red: 100%
+                green: 100%
                 blue: 100%
